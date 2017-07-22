@@ -2,9 +2,13 @@
 
 namespace App\Tool\SMS;
 
+use App\Model\M3Result;
+
 //手机短信验证
 class SMS
 {
+
+
      private $funAndOperate = "industrySMS/sendSMS";
      private $smsContent = "【大头科技】您的验证码为{1}，请于{2}分钟内正确输入，如非本人操作，请忽略此短信。";
      private $to ='13125082176';
@@ -60,10 +64,10 @@ class SMS
         $url = $this->createUrl($funAndOperate);
         $headers = $this->createHeaders();
 
-        echo("url:<br/>" . $url . "\n");
-        echo("<br/><br/>body:<br/>" . json_encode($body));
-        echo("<br/><br/>headers:<br/>");
-        var_dump($headers);
+//        echo("url:<br/>" . $url . "\n");
+//        echo("<br/><br/>body:<br/>" . json_encode($body));
+//        echo("<br/><br/>headers:<br/>");
+//        var_dump($headers);
 
         // 要求post请求的消息体为&拼接的字符串，所以做下面转换
         $fields_string = "";
@@ -90,13 +94,36 @@ class SMS
 
 
     function zend(){
+        $m3result = new M3Result;
+
        $body=$this->createBasicAuthData();
         $body['smsContent'] = $this->smsContent;
         $body['to'] = $this->to;
 
         $result = $this->post($this->funAndOperate, $body);
-        echo("<br/>result:<br/><br/>");
-        var_dump($result);
+//        echo("<br/>result:<br/><br/>");
+
+        $result1 = json_decode($result,true);
+
+  if ($result1['respCode'] == '00025') {
+      $m3result->status = 3;
+      $m3result->message = '手机格式不对';
+      return $m3result;
+//      echo $m3result->status;
+  }
+  if ($result1['respCode'] == '00104') {
+            $m3result->status = 4;
+            $m3result->message = '该手机号当日短信验证码已达上限';
+            return $m3result;
+  }
+  if ($result1['respCode'] == '00000'){
+
+          $m3result->status = 0;
+          $m3result->message = '发送成功';
+
+           return $m3result;
+
+  }
     }
 
 

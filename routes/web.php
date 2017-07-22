@@ -16,8 +16,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//登陆
 Route::get('/login','View\MemberController@toLogin');
-Route::get('/zend','View\MemberController@zend');
+
+//注册
 Route::get('/register','View\MemberController@toRegister');
 
+//图形验证码
 Route::any('/service/validate_code/create','Service\ValidateController@create');
+
+//手机验证码
+Route::any('/service/validate_phone/zend','Service\ValidateController@zendSMS');
