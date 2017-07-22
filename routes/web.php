@@ -10,8 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Entity\Member;
+
 
 Route::get('/', function () {
-    return Member::all();
+    return view('welcome');
 });
+
+Route::get('/login','View\MemberController@toLogin');
+Route::get('/zend','View\MemberController@zend');
+Route::get('/register','View\MemberController@toRegister');
+
+Route::any('/service/validate_code/create','Service\ValidateController@create');
