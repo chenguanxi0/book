@@ -27,3 +27,6 @@ Route::any('/service/validate_code/create','Service\ValidateController@create');
 
 //手机验证码
 Route::any('/service/validate_phone/zend','Service\ValidateController@zendSMS');
+
+//验证注册信息
+Route::any('/service/register','Service\MemberController@register');

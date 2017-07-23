@@ -47,8 +47,13 @@ class ValidateController extends Controller
 
 
         if ( $m3result->status == 0){
+
             //保存数据到临时表
-            $tempPhone = new TempPhone;
+            $tempPhone = TempPhone::where('phone',$phone)->first();
+            if ($tempPhone == null){
+                $tempPhone = new TempPhone;
+            }
+
             $tempPhone->phone = $phone;
             $tempPhone->code = $code;
             $tempPhone->deadline = date('Y-m-d H:i:s',time()+5*60);
@@ -56,6 +61,7 @@ class ValidateController extends Controller
 
 
         }
+
 
         return $m3result->toJson();
 

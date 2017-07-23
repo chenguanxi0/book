@@ -90,6 +90,8 @@
 @endsection
 
 @section('my-js')
+
+  {{--邮箱/手机注册切换--}}
 <script type="text/javascript">
   $('#x12').next().hide();
   $('input:radio[name=register_type]').click(function(event) {
@@ -113,76 +115,87 @@
   });
 
 </script>
-<script type="text/javascript">
-  var enable = true;
-  $('.bk_phone_code_send').click(function(event) {
-    if(enable == false) {
-      return;
-    }
+  {{--end--}}
 
-    var phone = $('input[name=phone]').val();
-    // 手机号不为空
-    if(phone == '') {
-      $('.bk_toptips').show();
-      $('.bk_toptips span').html('请输入手机号');
-      setTimeout(function() {$('.bk_toptips').hide();}, 2000);
-      return;
-    }
-    // 手机号格式
-    if(phone.length != 11 || phone[0] != '1') {
-      $('.bk_toptips').show();
-      $('.bk_toptips span').html('手机格式不正确');
-      setTimeout(function() {$('.bk_toptips').hide();}, 2000);
-      return;
-    }
+  {{--调用验证码接口--}}
+  <script type="text/javascript">
 
-    $(this).removeClass('bk_important');
-    $(this).addClass('bk_summary');
-    enable = false;
-    var num = 60;
-    var interval = window.setInterval(function() {
-      $('.bk_phone_code_send').html(--num + 's 重新发送');
-      if(num == 0) {
-        $('.bk_phone_code_send').removeClass('bk_summary');
-        $('.bk_phone_code_send').addClass('bk_important');
-        enable = true;
-        window.clearInterval(interval);
-        $('.bk_phone_code_send').html('重新发送');
-      }
-    }, 1000);
+      var enable = true;
+      $('.bk_phone_code_send').click(function () {
 
-    $.ajax({
-      url: '/service/validate_phone/send',
-      dataType: 'json',
-      cache: false,
-      data: {phone: phone},
-      success: function(data) {
-        if(data == null) {
-          $('.bk_toptips').show();
-          $('.bk_toptips span').html('服务端错误');
-          setTimeout(function() {$('.bk_toptips').hide();}, 2000);
-          return;
-        }
-        if(data.status != 0) {
-          $('.bk_toptips').show();
-          $('.bk_toptips span').html(data.message);
-          setTimeout(function() {$('.bk_toptips').hide();}, 2000);
-          return;
-        }
+          if(enable == false){
+              return;
+          }
+          var phone = $('input[name=phone]').val();
+          if(phone == ''){
+              $('.bk_toptips').show();
+              $('.bk_toptips span').html('请输入手机号');
+              setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+              return;
+          }
+          if(phone.length != 11 || phone[0] != '1'){
+              $('.bk_toptips').show();
+              $('.bk_toptips span').html('手机号格式错误');
+              setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+              return;
+          }
+          enable = false;
 
-        $('.bk_toptips').show();
-        $('.bk_toptips span').html('发送成功');
-        setTimeout(function() {$('.bk_toptips').hide();}, 2000);
-      },
-      error: function(xhr, status, error) {
-        console.log(xhr);
-        console.log(status);
-        console.log(error);
-      }
-    });
-  });
-</script>
-<script type="text/javascript">
+//        验证码定时器
+          var num = 60;
+          var setInterval = window.setInterval(function () {
+              $('.bk_phone_code_send').removeClass('bk_important');
+              $('.bk_phone_code_send').addClass('bk_summary');
+              $('.bk_phone_code_send').html(--num + 's 重新发送');
+
+              if (num == 0){
+                  $('.bk_phone_code_send').removeClass('bk_summary');
+                  $('.bk_phone_code_send').addClass('bk_important');
+                  enable = true;
+                  window.clearInterval(setInterval);
+                  $('.bk_phone_code_send').html('重新发送');
+              }
+          },1000);
+
+          $.ajax({
+              url:'/service/validate_phone/zend',
+              data:{phone:phone},
+              dataType:'json',
+              cache:false,
+              success:function (data) {
+                  if (data == null){
+                      $('.bk_toptips').show();
+                      $('.bk_toptips span').html('服务端错误');
+                      setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+                  }
+                  if (data.status == 0){
+                      $('.bk_toptips').show();
+                      $('.bk_toptips span').html('验证码发送成功');
+                      setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+
+                  }
+                  $('.bk_toptips').show();
+                  $('.bk_toptips span').html(data.message);
+                  setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+
+              },
+              error: function(xhr, status, error) {
+                  console.log(xhr);
+                  console.log(status);
+                  console.log(error);
+              }
+
+          });
+
+
+
+      });
+
+  </script>
+  {{--end--}}
+
+  {{--前端验证注册信息--}}
+  <script type="text/javascript">
 
   function onRegisterClick() {
 
@@ -346,5 +359,5 @@
   }
 
 </script>
-
+  {{--end--}}
 @endsection
