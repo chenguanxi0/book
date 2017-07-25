@@ -8,14 +8,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Entity\TempPhone;
 use App\Model\M3Result;
-
+use App\Entity\TempEmail;
+use App\Entity\Member;
 //验证码控制器
 class ValidateController extends Controller
 {
 //    生成图形验证码
-    public function create()
+    public function create(Request $request)
     {
         $ValidateCode = new ValidateCode;
+        $request->session()->put('validate',$ValidateCode->getCode());
 
         return $ValidateCode->doimg();
     }
@@ -68,4 +70,31 @@ class ValidateController extends Controller
     }
 
 
+    public function validate_email(Request $request)
+    {
+        $member_id = $request->input('member_id','');
+        $code = $request->input('code','');
+        if ($member_id == null || $code == null){
+            return '验证异常';
+        }
+
+        $TempEmail = TempEmail::where('member_id',$member_id)->first();
+        if ($TempEmail == null){
+            return '验证异常';
+        }
+        if ($TempEmail->code == $code){
+            if (strtotime($TempEmail->deadline) < time()){
+                return '验证超时';
+            }
+
+            $member = Member::where('id',$member_id)->first();
+            $member->active = 1;
+            $member->save();
+            return redirect('/login');
+
+        }else{
+            return '验证链接失效';
+        }
+
+    }
 }

@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Service;
 
 use App\Entity\Member;
+use App\Entity\TempEmail;
+use App\Tool\UUID;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Entity\TempPhone;
 use App\Model\M3Result;
 use App\Tool\Validate\ValidateCode;
+use Illuminate\Support\Facades\Mail;
+use App\Model\M3Email;
 
 class MemberController extends Controller
 {
@@ -83,22 +87,57 @@ class MemberController extends Controller
             //邮箱注册
 
             //验证码为4位
-            if (strlen($validate_code) != 4 || $validate_code =''){
+            if (strlen($validate_code) != 4 || $validate_code  ==''){
                 $M3Result->status = 6;
                 $M3Result->message = '验证码为4位';
                 return $M3Result->toJson();
             }
-            $Validate = new ValidateCode;
-            if($Validate->getCode() != strtolower($validate_code)){
+
+
+
+            $validate_session =$request->session()->get('validate','');
+
+            if (mb_strtolower($validate_session) != mb_strtolower($validate_code)){
                 $M3Result->status = 7;
                 $M3Result->message = '验证码错误';
                 return $M3Result->toJson();
             }
+            $member = new Member;
+            $member->email = $email;
+            $member->password = md5($password);
+            $member->save();
+
+            $uuid = UUID::create();
+
+            //发送邮件
+            $M3Email = new M3Email;
+            $M3Email->to = $email;
+            $M3Email->cc = 'zhaowei491788533@163.com';
+            $M3Email->subject = '大头科技';
+            $M3Email->content = '请于24小时点击该链接完成验证. http://book.com/service/validate_email'
+                                 .'?member_id='.$member->id
+                                 .'&code='.$uuid;
+
+            //保存邮件验证信息
+            $tempemail = new TempEmail;
+            $tempemail->code = $uuid;
+            $tempemail->member_id = $member->id;
+            $tempemail->deadline =date('Y-m-d H:i:s',time()+24*60);
+            $tempemail->save();
+
+            Mail::send('email_register', ['M3Email' => $M3Email], function ($m) use ($M3Email) {
+                $m->to($M3Email->to, '尊敬的用户')
+                  ->cc($M3Email->cc)
+                  ->subject($M3Email->subject);
+            });
+
+            $M3Result->status = 0;
+            $M3Result->message = '注册成功';
+            return $M3Result->toJson();
+
+
 
         }
 
-
-        return $M3Result->toJson();
-        
-    }
+}
 }

@@ -30,3 +30,5 @@ Route::any('/service/validate_phone/zend','Service\ValidateController@zendSMS');
 
 //验证注册信息
 Route::any('/service/register','Service\MemberController@register');
+
+Route::get('service/validate_email','Service\ValidateController@validate_email');

@@ -44,7 +44,7 @@
       </div>
   </div>
   <div class="weui_cell">
-      <div class="weui_cell_hd"><label class="weui_label">手机验证码</label></div>
+      <div class="weui_cell_hd"><label class="weui_label">验证码</label></div>
       <div class="weui_cell_bd weui_cell_primary">
           <input class="weui_input" type="number" placeholder="" name='phone_code'/>
       </div>
