@@ -91,6 +91,7 @@
 
 @section('my-js')
 
+
   {{--邮箱/手机注册切换--}}
 <script type="text/javascript">
   $('#x12').next().hide();
@@ -174,6 +175,15 @@
                       setTimeout(function() {$('.bk_toptips').hide();}, 2000);
 
                   }
+                  if (data.status == 2){
+
+                      $('.bk_toptips').show();
+                      $('.bk_toptips span').html(data.message);
+                      setTimeout(function() {location.href = '/login'}, 2000);
+
+
+
+                  }
                   $('.bk_toptips').show();
                   $('.bk_toptips span').html(data.message);
                   setTimeout(function() {$('.bk_toptips').hide();}, 2000);
@@ -227,7 +237,10 @@
           }
         }
 
-        $.ajax({
+
+
+
+          $.ajax({
           type: "POST",
           url: '/service/register',
           dataType: 'json',

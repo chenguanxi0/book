@@ -22,13 +22,19 @@ Route::get('/login','View\MemberController@toLogin');
 //注册
 Route::get('/register','View\MemberController@toRegister');
 
-//图形验证码
-Route::any('/service/validate_code/create','Service\ValidateController@create');
+
+
+Route::group(['prefix' => 'service'], function () {
+    //图形验证码
+    Route::get('validate_code/create','Service\ValidateController@create');
 
 //手机验证码
-Route::any('/service/validate_phone/zend','Service\ValidateController@zendSMS');
+    Route::post('validate_phone/zend','Service\ValidateController@zendSMS');
 
 //验证注册信息
-Route::any('/service/register','Service\MemberController@register');
+    Route::post('register','Service\MemberController@register');
 
-Route::get('service/validate_email','Service\ValidateController@validate_email');
+    Route::post('login','Service\MemberController@login');
+
+    Route::post('validate_email','Service\ValidateController@validate_email');
+});

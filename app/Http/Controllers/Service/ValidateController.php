@@ -36,6 +36,13 @@ class ValidateController extends Controller
             return $m3result->toJson();
         }
 
+        $member = Member::where('phone',$phone)->first();
+        if ($member != null){
+            $m3result->status = 2;
+            $m3result->message = '该手机号已经注册，请直接登陆';
+            return $m3result->toJson();
+        }
+
         $code = '';
         $charset = '1234567890';
         $_len = strlen($charset) - 1;
