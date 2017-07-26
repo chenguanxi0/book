@@ -108,9 +108,17 @@ body,html{height:100%;-webkit-tap-highlight-color:transparent}
 
 .bk_bottom_tips {display: block; padding: 20px 0; width: 100%; text-align: center;}
 .bk_price{color: #fd3737}
-.bk_title_bar {position: relative;height: 58px;width: 100%; background-color:black}
-.bk_title_content {position: absolute;left: 50px;right: 50px;line-height: 50px;text-align: center;color: white;font-size: 18px;}
-.bk_back,.bk_menu {position: absolute;width: 30px;height: 30px;top: 10px;}
-.bk_back {left:10px;}
-.bk_menu {right:10px;}
 
+
+/* 底部标签 */
+.bk_content {margin-bottom: 50px;}
+.bk_fix_bottom {position: fixed; bottom: 0; width: 100%; background-color: #eeeeee;}
+.bk_half_area {width: 45%; padding: 5px 2%; display: inline-block;}
+.bk_btn_area {width: 96%; padding: 5px 2%; display: inline-block;}
+
+/* 标题栏 */
+.bk_title_bar {position: relative;height: 50px;width: 100%; background-color: #25201f}
+.bk_title_content {position: absolute;left: 50px;right: 50px;line-height: 50px;text-align: center;font-size: 18px;color: #FFFFFF}
+.bk_back, .bk_menu {position: absolute;width: 30px;height: 30px;top: 10px;}
+.bk_back {left: 10px;}
+.bk_menu {right: 10px;}

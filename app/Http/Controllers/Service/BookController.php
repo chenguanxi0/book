@@ -19,4 +19,5 @@ class BookController extends Controller
         $M3Result->categorys = $categorys;
         return $M3Result->toJson();
     }
+
 }

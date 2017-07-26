@@ -57,7 +57,7 @@
                       var node =  '<a class="weui_cell" href="/product/category_id/'+data.categorys[i].id+'">'+
                           '<div class="weui_cell_hd">'+
                           '<img src="images/book.png" alt=""></div>' +
-                      '<div class="weui_cell_bd weui_cell_primary">'+
+                      '<div style="margin-left: 10px;" class="weui_cell_bd weui_cell_primary">'+
                       ' <p>'+ data.categorys[i].name +'</p>'+
                       '</div>'+
                       ' </a>';
