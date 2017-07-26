@@ -9,6 +9,12 @@
 </head>
 <body>
 
+<div class="bk_title_bar">
+    <img class="bk_back" src="/images/back.png" alt="" onclick=history.go(-1)>
+    <p class="bk_title_content">xxx</p>
+    <img class="bk_menu" src="/images/menu.png" alt="" onclick="onMenuClick();">
+</div>
+
 <div class="page">
     @yield('content')
 </div>
@@ -16,9 +22,7 @@
 <!-- tooltips -->
 <div class="bk_toptips"><span></span></div>
 
-<div id="global_menu" onclick="onMenuClick();">
-    <div></div>
-</div>
+
 
 <!--BEGIN actionSheet-->
 <div id="actionSheet_wrap">
@@ -39,6 +43,7 @@
 </body>
 <script src="/js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript">
+    $('.bk_title_content').html(document.title);
     function hideActionSheet(weuiActionsheet, mask) {
         weuiActionsheet.removeClass('weui_actionsheet_toggle');
         mask.removeClass('weui_fade_toggle');
@@ -77,7 +82,10 @@
             $('.bk_toptips span').html("敬请期待!");
             setTimeout(function() {$('.bk_toptips').hide();}, 2000);
         }
-    }
+    };
+
+
+
 </script>
 
 @yield('my-js')

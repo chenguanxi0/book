@@ -22,6 +22,10 @@ Route::get('/login','View\MemberController@toLogin');
 //注册
 Route::get('/register','View\MemberController@toRegister');
 
+Route::get('/category','View\BookController@toCategory');
+
+Route::get('/product/category_id/{category_id}','View\BookController@toProduct');
+
 
 
 Route::group(['prefix' => 'service'], function () {
@@ -37,4 +41,6 @@ Route::group(['prefix' => 'service'], function () {
     Route::post('login','Service\MemberController@login');
 
     Route::post('validate_email','Service\ValidateController@validate_email');
+
+    Route::get('category/parent_id/{parent_id}','Service\BookController@toCategory');
 });

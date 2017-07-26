@@ -160,7 +160,8 @@
 
           $.ajax({
               url:'/service/validate_phone/zend',
-              data:{phone:phone},
+              type:'post',
+              data:{phone:phone,_token: "{{csrf_token()}}"},
               dataType:'json',
               cache:false,
               success:function (data) {

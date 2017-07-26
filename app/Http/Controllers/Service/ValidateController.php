@@ -29,19 +29,16 @@ class ValidateController extends Controller
         $m3result = new M3Result;
 
 //        判断手机号
+
         $phone = $request->input('phone','');
+        echo $phone;
         if ( $phone == ''){
             $m3result->status = 1;
             $m3result->message = '手机号不能为空';
             return $m3result->toJson();
         }
 
-        $member = Member::where('phone',$phone)->first();
-        if ($member != null){
-            $m3result->status = 2;
-            $m3result->message = '该手机号已经注册，请直接登陆';
-            return $m3result->toJson();
-        }
+
 
         $code = '';
         $charset = '1234567890';
