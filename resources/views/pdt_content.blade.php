@@ -37,7 +37,12 @@
     <div class="weui_cells_title">详细介绍</div>
     <div class="weui_cells">
         <div class="weui_cell">
-            {!!$Pdt_Content->content!!}
+            @if($Pdt_Content->content != null)
+                {!!$Pdt_Content->content!!}
+            @else
+
+            @endif
+
         </div>
     </div>
 
@@ -112,5 +117,9 @@
             });
         }
 
+
+        function _toCart(){
+            location.href='/cart';
+        }
         </script>
 @endsection   

@@ -31,8 +31,7 @@ Route::get('/product/category_id/{category_id}','View\BookController@toProduct')
 //详情页
 Route::get('/product/{product_id}','View\BookController@toPdtContent');
 
-
-
+Route::get('/cart','View\CartController@toCart');
 
 
 Route::group(['prefix' => '/service'], function () {
@@ -56,5 +55,12 @@ Route::group(['prefix' => '/service'], function () {
 
 //添加购物车
     Route::get('cart/add/{product_id}','Service\addCartController@addCart');
+    
+    Route::get('cart/delete','Service\addCartController@deleteCart');
+
+});
+
+//验证登陆中间件
+Route::group(['middleware'=>'check.login'],function(){
 
 });
