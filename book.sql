@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-07-26 12:24:32
+-- Generation Time: 2017-07-27 11:56:10
 -- 服务器版本： 10.1.22-MariaDB
 -- PHP Version: 7.0.18
 
@@ -93,6 +93,17 @@ CREATE TABLE `pdt_content` (
   `product_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- 转存表中的数据 `pdt_content`
+--
+
+INSERT INTO `pdt_content` (`id`, `created_at`, `updated_at`, `content`, `product_id`) VALUES
+(1, NULL, NULL, '<p>XXXXXXXXXX</p>', 1),
+(2, NULL, NULL, '<p>XXXXXXXXXX</p>', 2),
+(3, NULL, NULL, '<p>XXXXXXXXXX</p>', 3),
+(4, NULL, NULL, '<p>XXXXXXXXXX</p>', 4),
+(5, NULL, NULL, '<p>XXXXXXXXXX</p>', 5);
+
 -- --------------------------------------------------------
 
 --
@@ -107,6 +118,14 @@ CREATE TABLE `pdt_images` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `pdt_images`
+--
+
+INSERT INTO `pdt_images` (`id`, `image_path`, `image_no`, `product_id`, `created_at`, `updated_at`) VALUES
+(1, '/images/book/1.jpg', 1, 1, NULL, NULL),
+(2, '/images/book/2.jpg', 2, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -245,12 +264,12 @@ ALTER TABLE `member`
 -- 使用表AUTO_INCREMENT `pdt_content`
 --
 ALTER TABLE `pdt_content`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- 使用表AUTO_INCREMENT `pdt_images`
 --
 ALTER TABLE `pdt_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- 使用表AUTO_INCREMENT `product`
 --
