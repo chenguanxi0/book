@@ -10,7 +10,7 @@
 <body>
 
 <div class="bk_title_bar">
-    <img class="bk_back" src="/images/back.png" alt="" onclick=history.go(-1)>
+    <img class="bk_back" src="/images/back.png" alt="" onclick="window.location.href=document.referrer">
     <p class="bk_title_content">xxx</p>
     <img class="bk_menu" src="/images/menu.png" alt="" onclick="onMenuClick();">
 </div>

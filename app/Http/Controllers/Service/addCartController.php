@@ -66,14 +66,8 @@ class addCartController extends Controller
 
             if(in_array($product_id,$product_id_arr)){
 
-                array_splice($bk_cart_arr,$key,1,'0:0');
-
-            }
-        }
-
-        foreach ($bk_cart_arr as $key=>$value){
-            if ($value == '0:0'){
                 unset($bk_cart_arr[$key]);
+
             }
         }
 

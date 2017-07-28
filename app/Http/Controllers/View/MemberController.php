@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\View;
 
-
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 
 class MemberController extends Controller
 {
-    public function toLogin()
+    public function toLogin(Request $request)
     {
-
-        return view('login');
+        $return = $request->input('return');
+        return view('login')->with('return',urldecode($return));
     }
 
     public function toRegister()
     {
         return view('register');
     }
+
 
 }

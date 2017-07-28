@@ -15,9 +15,10 @@ class CheckLogin
      */
     public function handle($request, Closure $next)
     {
+        $referer = $_SERVER['HTTP_REFERER'];
         $member = $request->session()->get('member','');
         if ($member == '') {
-            return redirect('/login');
+            return redirect('/login?return='.urlencode($referer));
         }
 
         return $next($request);

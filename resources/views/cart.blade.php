@@ -103,6 +103,22 @@
         }
 
         function _toCharge(){
+            var products_id_arr = [];
+            $('input:checkbox[name=cart_item]').each(function(){
+                if($(this).attr('checked') == 'checked'){
+                    products_id_arr.push($(this).attr('id'));
+                }
+
+            });
+            console.log(products_id_arr);
+
+            if(products_id_arr == ''){
+                $('.bk_toptips').show();
+                $('.bk_toptips span').html('请选择商品');
+                setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+            }else{
+                location.href = '/order_pay?product_ids='+products_id_arr;
+            }
 
         }
     </script>

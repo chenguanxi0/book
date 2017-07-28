@@ -155,7 +155,7 @@ class MemberController extends Controller
 
         $validate_session =$request->session()->get('validate');
 
-        if ($validate_code != $validate_session){
+        if (mb_strtolower($validate_code) != mb_strtolower($validate_session)){
             $M3Result->status = 1;
             $M3Result->message = '验证码错误';
             return $M3Result->toJson();

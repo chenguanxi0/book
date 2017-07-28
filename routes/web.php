@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,7 +18,10 @@ Route::get('/', function () {
 
 //登陆
 Route::get('/login','View\MemberController@toLogin');
-
+Route::get('/logout',function (Request $request){
+    $request->session()->forget('member');
+   return redirect('/login');
+});
 //注册
 Route::get('/register','View\MemberController@toRegister');
 
@@ -62,5 +65,5 @@ Route::group(['prefix' => '/service'], function () {
 
 //验证登陆中间件
 Route::group(['middleware'=>'check.login'],function(){
-
+    Route::get('/order_pay','View\OrderController@toOrderPay');
 });
